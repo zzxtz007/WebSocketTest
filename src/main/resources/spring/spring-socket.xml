@@ -8,10 +8,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
     <context:component-scan base-package="top.haha233.websocket.controller.handler"/>
 
-    <websocket:handlers>
-        <websocket:mapping path="/websocket" handler="webSocket"/>
-        <websocket:handshake-interceptors>
-            <ref bean="handshake"/>
-        </websocket:handshake-interceptors>
-    </websocket:handlers>
+    <!--<websocket:handlers>-->
+        <!--<websocket:mapping path="/websocket" handler="webSocket"/>-->
+        <!--<websocket:mapping path="/sockjs/websocket" handler="webSocket"/>-->
+        <!--<websocket:handshake-interceptors>-->
+            <!--<ref bean="handshake"/>-->
+        <!--</websocket:handshake-interceptors>-->
+    <!--</websocket:handlers>-->
 </beans>
