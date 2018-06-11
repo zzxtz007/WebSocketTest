@@ -7,17 +7,24 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+/**
+ * websocket 配置文件
+ *
+ * @author ICE_DOG
+ */
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatMessageHandler(),"/ws/test").addInterceptors(new ChatHandshakeInterceptor());
-        registry.addHandler(chatMessageHandler(),"/ws/sockjs/test").addInterceptors(new ChatHandshakeInterceptor()).withSockJS();
-    }
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(chatMessageHandler(), "/ws/test")
+				.addInterceptors(new ChatHandshakeInterceptor());
+		registry.addHandler(chatMessageHandler(), "/ws/sockjs/test")
+				.addInterceptors(new ChatHandshakeInterceptor()).withSockJS();
+	}
 
-    @Bean
-    public TextWebSocketHandler chatMessageHandler(){
-        return new ChatMessageHandler();
-    }
+	@Bean
+	public TextWebSocketHandler chatMessageHandler() {
+		return new ChatMessageHandler();
+	}
 }
