@@ -1,9 +1,4 @@
 package top.haha233.websocket.controller.webtest;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.socket.CloseStatus;
@@ -11,16 +6,20 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatMessageHandler extends TextWebSocketHandler {
 
     /**
      * 这个会出现性能问题，最好用Map来存储，key用userid
      */
-    private static final List<WebSocketSession> users ;
+    private static final List<WebSocketSession> users;
     private static Logger logger = Logger.getLogger(ChatMessageHandler.class);
 
     static {
-        users =  new ArrayList<>();
+        users = new ArrayList<>();
     }
 
     /**
@@ -39,8 +38,11 @@ public class ChatMessageHandler extends TextWebSocketHandler {
      * 在UI在用js调用websocket.send()时候，会调用该方法
      */
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        sendMessageToUsers(message);
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws
+            Exception {
+        String ref = "服务器回答：" + message.getPayload();
+        TextMessage textMessage = new TextMessage(ref.getBytes("utf-8"));
+        sendMessageToUsers(textMessage);
         //super.handleTextMessage(session, message);
     }
 
@@ -83,7 +85,8 @@ public class ChatMessageHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws
+            Exception {
         if (session.isOpen()) {
             session.close();
         }
@@ -92,7 +95,8 @@ public class ChatMessageHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws
+            Exception {
         logger.debug("websocket connection closed......");
         users.remove(session);
     }
